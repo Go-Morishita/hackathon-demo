@@ -16,6 +16,16 @@ services:
     networks:
       - hackathon-demo-net
 
+  backend:
+    container_name: backend-rust-dev
+    build:
+      context: ./backend
+    command: cargo run
+    volumes:
+      - ./backend/rust:/app
+    networks:
+      - hackathon-demo-net
+
   nginx:
     container_name: nginx-proxy
     build:
