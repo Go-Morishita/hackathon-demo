@@ -1,17 +1,15 @@
-use sqlx::mysql::MySqlPoolOptions;
-use sqlx::MySqlPool;
 use dotenvy::dotenv;
-use std::env;
+use sqlx::{mysql::MySqlPoolOptions, MySqlPool};
 
-/// 環境変数 DATABASE_URL を読み込み, MySQLコネクションプールを返す
+/// .env / 環境変数 `DATABASE_URL` から MySQL プールを生成
 pub async fn init_db_pool() -> MySqlPool {
-    // .env ではなく Docker Compose の environment: からも読み込める
-    dotenv().ok();
-    let database_url =
-        env::var("DATABASE_URL").expect("DATABASE_URL must be set in environment");
+    dotenv().ok();                                       // .env 読込
+    let url = std::env::var("DATABASE_URL")
+        .expect("環境変数 DATABASE_URL が未設定です");
+
     MySqlPoolOptions::new()
         .max_connections(5)
-        .connect(&database_url)
+        .connect(&url)
         .await
-        .expect("Failed to connect to MySQL")
+        .expect("MySQL への接続に失敗しました")
 }
