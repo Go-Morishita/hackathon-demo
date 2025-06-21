@@ -1,3 +1,3 @@
-FROM mysql:8.0.33
+FROM mysql:latest
 
-COPY ./etc/mysql/conf.d /etc/mysql/conf.d
+COPY ./default.cnf /etc/mysql/conf.d/default.cnf

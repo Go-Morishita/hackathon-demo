@@ -23,6 +23,10 @@ services:
       - ./backend/rust:/app
     networks:
       - hackathon-demo-net
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql://hackathon_demo_admin:hackathon_demo@db:3306/hackathon_demo_db
 
   nginx:
     container_name: nginx-proxy
@@ -35,6 +39,37 @@ services:
       - backend
     networks:
       - hackathon-demo-net
+
+  db:
+    container_name: mysql-db
+    build:
+      context: ./mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: hackathon_demo
+      MYSQL_DATABASE: hackathon_demo_db
+      MYSQL_USER: hackathon_demo_admin
+      MYSQL_PASSWORD: hackathon_demo
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - hackathon-demo-net
+  
+  migrator:
+    container_name: sqlx-migrator
+    build:
+      context: ./migrator
+    volumes:
+      - ./migrator/migrations:/app/migrations
+      - ./migrator/sqlx.toml:/app/sqlx.toml
+    environment:
+      - DATABASE_URL=mysql://hackathon_demo_admin:hackathon_demo@db:3306/hackathon_demo_db
+    depends_on:
+      - db
+    networks:
+      - hackathon-demo-net
+
+volumes:
+  db_data:
 
 networks:
   hackathon-demo-net:

@@ -1,0 +1,2 @@
+[default]
+database_url = "mysql://hackathon_demo_admin:hackathon_demo@db:3306/hackathon_demo_db"
