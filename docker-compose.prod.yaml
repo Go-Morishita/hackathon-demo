@@ -1,0 +1,66 @@
+services:
+  frontend:
+    container_name: frontend-next-prod
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile.prod
+    networks:
+      - hackathon-demo-net
+
+  backend:
+    container_name: backend-rust-prod
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    networks:
+      - hackathon-demo-net
+    depends_on:
+      - db
+    environment:
+      #Lightsailのコンテナサービスで環境変数を設定
+      - DATABASE_URL=mysql://hackathon_demo_admin:hackathon_demo@db:3306/hackathon_demo_db
+
+  nginx:
+    container_name: nginx-proxy-prod
+    build:
+      context: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - frontend
+      - backend
+    networks:
+      - hackathon-demo-net
+
+  db:
+    container_name: mysql-db-prod
+    build:
+      context: ./mysql
+    environment:
+      # パスワードはLightsailの環境変数やAWS Secrets Managerで管理することを推奨
+      MYSQL_ROOT_PASSWORD: hackathon_demo
+      MYSQL_DATABASE: hackathon_demo_db
+      MYSQL_USER: hackathon_demo_admin
+      MYSQL_PASSWORD: hackathon_demo
+    volumes:
+      - db_data:/var/lib/mysql # データの永続化
+    networks:
+      - hackathon-demo-net
+  
+  migrator:
+    container_name: sqlx-migrator-prod
+    build:
+      context: ./migrator
+      dockerfile: Dockerfile.prod
+    environment:
+      - DATABASE_URL=mysql://hackathon_demo_admin:hackathon_demo@db:3306/hackathon_demo_db
+    depends_on:
+      - db
+    networks:
+      - hackathon-demo-net
+
+volumes:
+  db_data:
+
+networks:
+  hackathon-demo-net:
