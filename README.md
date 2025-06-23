@@ -2,7 +2,7 @@
 
 # 開発方法
 ## Dcokerコマンド
-プロジェクトルート : `dcoker compose up --build`
+プロジェクトルート : `docker compose up --build`
 ## 注意
 
 
