@@ -25,6 +25,7 @@ services:
       - db
     environment:
       - DATABASE_URL=mysql://hackathon_demo_admin:hackathon_demo@db:3306/hackathon_demo_db
+      - RUST_LOG=info,sqlx=debug
 
   nginx:
     container_name: nginx-proxy
