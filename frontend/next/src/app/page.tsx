@@ -9,7 +9,11 @@ export default function Home() {
 
   const backendTest = async () => {
     try {
-      const res = await axios.get('/api/');
+      const res = await axios.get('/api/', {
+        headers: {
+          'API_KEY': process.env.API_KEY
+        }
+      });
       console.log(res.data);
       setResponse(res.data);
     } catch (error) {

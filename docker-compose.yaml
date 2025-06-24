@@ -9,6 +9,7 @@ services:
       - /app/node_modules
     environment:
       - WATCHPACK_POLLING=true
+      - API_KEY=MTgpZPAnSnxxqZzFGVfj44aF-MwFes8LG4xv9Ubp
     networks:
       - hackathon-demo-net
 
@@ -25,7 +26,7 @@ services:
       - db
     environment:
       - DATABASE_URL=mysql://hackathon_demo_admin:hackathon_demo@db:3306/hackathon_demo_db
-      - RUST_LOG=info,sqlx=debug
+      - API_KEY=MTgpZPAnSnxxqZzFGVfj44aF-MwFes8LG4xv9Ubp
 
   nginx:
     container_name: nginx-proxy

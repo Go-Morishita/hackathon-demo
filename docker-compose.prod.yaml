@@ -17,7 +17,6 @@ services:
     depends_on:
       - db
     environment:
-      #Lightsailのコンテナサービスで環境変数を設定
       - DATABASE_URL=mysql://hackathon_demo_admin:hackathon_demo@db:3306/hackathon_demo_db
 
   nginx:
@@ -37,13 +36,12 @@ services:
     build:
       context: ./mysql
     environment:
-      # パスワードはLightsailの環境変数やAWS Secrets Managerで管理することを推奨
       MYSQL_ROOT_PASSWORD: hackathon_demo
       MYSQL_DATABASE: hackathon_demo_db
       MYSQL_USER: hackathon_demo_admin
       MYSQL_PASSWORD: hackathon_demo
     volumes:
-      - db_data:/var/lib/mysql # データの永続化
+      - db_data:/var/lib/mysql
     networks:
       - hackathon-demo-net
   
