@@ -9,7 +9,7 @@ export default function Home() {
 
   const backendTest = async () => {
     try {
-      const res = await axios.get('http://localhost/api/');
+      const res = await axios.get('/api/');
       console.log(res.data);
       setResponse(res.data);
     } catch (error) {
