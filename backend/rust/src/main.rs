@@ -1,6 +1,7 @@
+mod auth;
 mod db;
-mod models;
 mod handlers;
+mod models;
 mod routes;
 
 use models::AppState;
