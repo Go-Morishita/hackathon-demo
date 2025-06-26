@@ -34,3 +34,7 @@ apt-get install -y git
 - バックエンドを外部から叩けないようにする:https://gemini.google.com/app/abe9305d39109cb3
 - httpsの設定
 - 独自ドメインの設定
+
+- 一旦フロントにAPI-KEYハードコーディングで秘匿通信可能に
+- ここをもっとつめる
+- もう一個エンドのポイントの実装も必要
