@@ -51,10 +51,10 @@ pub async fn get_user(
     }
 }
 
-pub async fn get_all_user(
+pub async fn get_all_users(
     State(state): State<AppState>
-) -> Result<Json<UserResponse>, StatusCode> {
-    let rec = sqlx::query_as::<_, UserResponse>(
+) -> Result<Vec<UserResponse>, StatusCode> {
+    let users = sqlx::query_as::<_, UserResponse>(
         "SELECT id, name, email FROM users",
     )
     .fetch_all(&state.pool)

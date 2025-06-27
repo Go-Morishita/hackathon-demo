@@ -7,8 +7,10 @@ use axum::{
 
 pub fn create_router(state: AppState) -> Router {
     let api_routes = Router::new()
-        .route("/users", post(handlers::create_user))
-        .route("/users", get(handlers::get_all_user))
+        .route(
+            "/users",
+            get(handlers::get_all_users).post(handlers::create_user),
+        )
         .route("/users/{id}", get(handlers::get_user))
         .layer(middleware::from_fn(auth::require_api_key));
 
