@@ -97,7 +97,7 @@ export default function Home() {
       </header>
       <main className="flex flex-col gap-4">
         <div>
-          <h1 className="text-2xl">1. Hello World</h1>
+          <h1 className="text-2xl mb-2">1. Hello World</h1>
           <button className="bg-amber-200 border rounded-md p-2" onClick={getHello}>Send</button>
           {helloResponse && (
             <pre className="whitespace-pre-wrap bg-gray-100 p-2 rounded mt-2">
@@ -106,7 +106,7 @@ export default function Home() {
           )}
         </div>
         <div>
-          <h1 className="text-2xl">2. User Table Schema</h1>
+          <h1 className="text-2xl mb-2">2. User Table Schema</h1>
           <pre className="whitespace-pre-wrap bg-gray-100 p-2 rounded text-sm">
             {`CREATE TABLE users (
             id BIGINT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -117,7 +117,7 @@ export default function Home() {
         </div>
 
         <div>
-          <h1 className="text-2xl">3. Post user</h1>
+          <h1 className="text-2xl mb-2">3. Post user</h1>
           <input
             type="text"
             className="border rounded-md p-2 me-1"
@@ -141,7 +141,7 @@ export default function Home() {
           )}
         </div>
         <div>
-          <h1 className="text-2xl">4. Get user</h1>
+          <h1 className="text-2xl mb-2">4. Get user</h1>
           <input
             type="text"
             className="border rounded-md p-2 me-1"
@@ -167,7 +167,7 @@ export default function Home() {
           )}
         </div>
         <div>
-          <h1 className="text-2xl">6. Put user</h1>
+          <h1 className="text-2xl mb-2">6. Put user</h1>
           <input
             type="text"
             className="border rounded-md p-2 me-1"
@@ -197,7 +197,7 @@ export default function Home() {
           )}
         </div>
         <div>
-          <h1 className="text-2xl">7. Delete user</h1>
+          <h1 className="text-2xl mb-2">7. Delete user</h1>
           <input
             type="text"
             className="border rounded-md p-2 me-1"
@@ -205,7 +205,7 @@ export default function Home() {
             value={deleteUserId}
             onChange={(e) => setDeleteUserId(e.target.value)}
           />
-          <button className="bg-amber-200 border rounded-md p-2 mt-2" onClick={deleteUser}>Send</button>
+          <button className="bg-amber-200 border rounded-md p-2" onClick={deleteUser}>Send</button>
           {deleteUserResponse && (
             <pre className="whitespace-pre-wrap bg-gray-100 p-2 rounded mt-2">
               {JSON.stringify(deleteUserResponse, null, 2)}
