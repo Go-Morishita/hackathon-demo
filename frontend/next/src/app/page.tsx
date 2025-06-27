@@ -132,7 +132,6 @@ export default function Home() {
             placeholder="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-
           />
           <button className="bg-amber-200 border rounded-md p-2" onClick={postAddUser}>Send</button>
           {addUserResponse && (
