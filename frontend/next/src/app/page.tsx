@@ -117,7 +117,7 @@ export default function Home() {
         </div>
 
         <div>
-          <h1 className="text-2xl">3. Post users</h1>
+          <h1 className="text-2xl">3. Post user</h1>
           <input
             type="text"
             className="border rounded-md p-2 me-1"

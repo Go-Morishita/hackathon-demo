@@ -30,6 +30,9 @@ chmod +x /usr/local/bin/docker-compose
 apt-get install -y git
 ```
 
+# バックエンドAxum
+- xqlx関連ごり押している（マクロ？）
+
 # 次回
 - バックエンドを外部から叩けないようにする:https://gemini.google.com/app/abe9305d39109cb3
 - httpsの設定
