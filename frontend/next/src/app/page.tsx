@@ -89,8 +89,8 @@ export default function Home() {
   }
 
   return (
-    <div className="px-4 pb-4">
-      <header className="flex items-center justify-between py-4">
+    <div className="px-60 p-10">
+      <header className="flex items-center justify-between mb-4">
         <h1 className="text-3xl font-bold underline">
           Hackathon Demo Application
         </h1>
