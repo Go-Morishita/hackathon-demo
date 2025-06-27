@@ -5,13 +5,13 @@ use axum::{
 };
 use serde_json::json;
 use crate::models::{AppState, CreateUserRequest, UserResponse};
-use sqlx::mysql::MySqlQueryResult;
+use sqlx::{query, query_as, mysql::MySqlQueryResult};
 
 pub async fn create_user(
     State(state): State<AppState>,
     Json(payload): Json<CreateUserRequest>,
 ) -> Result<(StatusCode, Json<serde_json::Value>), StatusCode> {
-    let result: MySqlQueryResult = sqlx::query(
+    let result: MySqlQueryResult = query(
         "INSERT INTO users (name, email) VALUES (?, ?)",
     )
     .bind(&payload.name)
@@ -37,7 +37,7 @@ pub async fn get_user(
     Path(id): Path<u64>,
     State(state): State<AppState>,
 ) -> Result<Json<UserResponse>, StatusCode> {
-    let rec = sqlx::query_as::<_, UserResponse>(
+    let rec = query_as::<_, UserResponse>(
         "SELECT id, name, email FROM users WHERE id = ?",
     )
     .bind(id)
@@ -57,7 +57,7 @@ pub async fn get_user(
 pub async fn get_all_users(
     State(state): State<AppState>
 ) -> Result<Json<Vec<UserResponse>>, StatusCode> {
-    let users = sqlx::query_as::<_, UserResponse>(
+    let users = query_as::<_, UserResponse>(
         "SELECT id, name, email FROM users",
     )
     .fetch_all(&state.pool)
@@ -75,12 +75,12 @@ pub async fn update_user(
     State(state): State<AppState>,
     Json(payload): Json<CreateUserRequest>,
 ) -> Result<(StatusCode, Json<serde_json::Value>), StatusCode> {
-    let result = sqlx::query!(
+    let result = query(
         "UPDATE users SET name = ?, email = ? WHERE id = ?",
-        payload.name,
-        payload.email,
-        id
     )
+    .bind(&payload.name)
+    .bind(&payload.email)
+    .bind(id)
     .execute(&state.pool)
     .await
     .map_err(|e| {
@@ -92,22 +92,22 @@ pub async fn update_user(
         return Err(StatusCode::NOT_FOUND);
     }
 
-   Ok((
+    Ok((
         StatusCode::OK,
         Json(json!({
             "message": format!("User with id {} updated successfully", id)
         })),
     ))
 }
- 
+
 pub async fn delete_user(
     Path(id): Path<u64>,
     State(state): State<AppState>,
 ) -> Result<(StatusCode, Json<serde_json::Value>), StatusCode> {
-    let result = sqlx::query!(
+    let result = query(
         "DELETE FROM users WHERE id = ?",
-        id
     )
+    .bind(id)
     .execute(&state.pool)
     .await
     .map_err(|e| {
@@ -119,11 +119,10 @@ pub async fn delete_user(
         return Err(StatusCode::NOT_FOUND);
     }
 
-   Ok((
+    Ok((
         StatusCode::OK,
         Json(json!({
             "message": format!("User with id {} deleted successfully", id)
         })),
     ))
 }
-
