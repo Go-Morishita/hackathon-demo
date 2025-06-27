@@ -7,6 +7,8 @@ export default function Home() {
 
   const [helloResponse, setHelloResponse] = useState();
   const [addUserResponse, setAddUserResponse] = useState();
+  const [userId, setUserId] = useState<string>('');
+  const [user, setUser] = useState();
   const [users, setUsers] = useState();
 
   const getHello = async () => {
@@ -28,8 +30,18 @@ export default function Home() {
     setAddUserResponse(res.data);
   }
 
+  const getUser = async () => {
+    const res = await axios.get(`/api/users/${userId}`,
+      {
+        headers: {
+          'API-KEY': "MTgpZPAnSnxxqZzFGVfj44aF-MwFes8LG4xv9Ubp"
+        }
+      })
+    setUser(res.data);
+  }
+
   const getUsers = async () => {
-    const res = await axios.get('/api/users/1',
+    const res = await axios.get('/api/users',
       {
         headers: {
           'API-KEY': "MTgpZPAnSnxxqZzFGVfj44aF-MwFes8LG4xv9Ubp"
@@ -66,10 +78,18 @@ export default function Home() {
         </div>
         <div>
           <h1 className="text-2xl">3. Get user</h1>
-          <button className="bg-amber-200 border rounded-md p-2" onClick={getUsers}>Send</button>
-          {users && (
+          <input
+            type="text"
+            className="border rounded-md p-2"
+            placeholder="User Id"
+            value={userId}
+            onChange={(e) => setUserId(e.target.value)}
+
+          />
+          <button className="bg-amber-200 border rounded-md p-2" onClick={getUser}>Send</button>
+          {user && (
             <pre className="whitespace-pre-wrap bg-gray-100 p-2 rounded">
-              {JSON.stringify(users, null, 2)}
+              {JSON.stringify(user, null, 2)}
             </pre>
           )}
         </div>
