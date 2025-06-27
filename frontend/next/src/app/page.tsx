@@ -6,9 +6,14 @@ import { useState } from "react";
 export default function Home() {
 
   const [helloResponse, setHelloResponse] = useState();
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
   const [addUserResponse, setAddUserResponse] = useState();
+
   const [userId, setUserId] = useState<string>('');
   const [user, setUser] = useState();
+
   const [users, setUsers] = useState();
 
   const getHello = async () => {
@@ -19,8 +24,8 @@ export default function Home() {
   const postAddUser = async () => {
     const res = await axios.post('/api/users',
       {
-        name: 'Bob',
-        email: "naaabbbbaa"
+        name: { name },
+        email: { email }
       },
       {
         headers: {
@@ -69,6 +74,22 @@ export default function Home() {
         </div>
         <div>
           <h1 className="text-2xl">2. Add users</h1>
+          <input
+            type="text"
+            className="border rounded-md p-2"
+            placeholder="Name"
+            value={userId}
+            onChange={(e) => setName(e.target.value)}
+
+          />
+          <input
+            type="text"
+            className="border rounded-md p-2"
+            placeholder="Email"
+            value={userId}
+            onChange={(e) => setEmail(e.target.value)}
+
+          />
           <button className="bg-amber-200 border rounded-md p-2" onClick={postAddUser}>Send</button>
           {addUserResponse && (
             <pre className="whitespace-pre-wrap bg-gray-100 p-2 rounded">
