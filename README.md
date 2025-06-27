@@ -30,14 +30,18 @@ chmod +x /usr/local/bin/docker-compose
 apt-get install -y git
 ```
 
+## SSL設定
+- 
+
 # バックエンドAxum
 - xqlx関連ごり押している（マクロ？）
 
-# 次回
+# 問題と解決
 - バックエンドを外部から叩けないようにする:https://gemini.google.com/app/abe9305d39109cb3
-- httpsの設定
+⇒ API-KEYをヘッダーに
 - 独自ドメインの設定
+⇒ Lightsail画面上から簡単に設定可能
 
-- 一旦フロントにAPI-KEYハードコーディングで秘匿通信可能に
-- ここをもっとつめる
-- もう一個エンドのポイントの実装も必要
+# 次回
+- httpsの設定
+- フロントエンドのAPI-KEYあたりの最適化
