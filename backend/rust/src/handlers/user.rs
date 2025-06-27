@@ -4,14 +4,12 @@ use axum::{
     Json,
 };
 use crate::models::{AppState, CreateUserRequest, UserResponse};
-use sqlx::mysql::MySqlQueryResult; // last_insert_id() 用
+use sqlx::mysql::MySqlQueryResult;
 
-/// POST /users
 pub async fn create_user(
     State(state): State<AppState>,
     Json(payload): Json<CreateUserRequest>,
 ) -> Result<(StatusCode, Json<UserResponse>), StatusCode> {
-    // 挿入
     let result: MySqlQueryResult = sqlx::query(
         "INSERT INTO users (name, email) VALUES (?, ?)",
     )
@@ -32,7 +30,6 @@ pub async fn create_user(
     Ok((StatusCode::CREATED, Json(user)))
 }
 
-/// GET /users/:id
 pub async fn get_user(
     Path(id): Path<u64>,
     State(state): State<AppState>,
@@ -52,4 +49,20 @@ pub async fn get_user(
         Some(user) => Ok(Json(user)),
         None => Err(StatusCode::NOT_FOUND),
     }
+}
+
+pub async fn get_all_user(
+    State(state): State<AppState>
+) -> Result<Json<UserResponse>, StatusCode> {
+    let rec = sqlx::query_as::<_, UserResponse>(
+        "SELECT id, name, email FROM users",
+    )
+    .fetch_all(&state.pool)
+    .await
+    .map_err(|e| {
+        eprintln!("DB select error: {e}");
+        StatusCode::INTERNAL_SERVER_ERROR
+    })?;
+
+    Ok(Json(users))
 }
