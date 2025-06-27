@@ -158,7 +158,7 @@ export default function Home() {
           )}
         </div>
         <div>
-          <h1 className="text-2xl">5. Get users</h1>
+          <h1 className="text-2xl mb-2">5. Get users</h1>
           <button className="bg-amber-200 border rounded-md p-2" onClick={getUsers}>Send</button>
           {users && (
             <pre className="whitespace-pre-wrap bg-gray-100 p-2 rounded">
